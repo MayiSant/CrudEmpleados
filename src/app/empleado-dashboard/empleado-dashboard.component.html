@@ -1,0 +1,100 @@
+<nav class="navbar navbar-light bg-primary">
+  <div class="container-fluid">
+  <h1 style="color: aliceblue;"> CRUD Empleados </h1>
+  <div class="d-flex">   
+  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Agregar Empleado
+  </button>
+  </div>
+  </div>
+  </nav>
+ <!-- Tabla que nos mostrara los datos ingresados por el usuario -->
+  <div class="container">
+      <table class="table mt-3" style="width: 90%;"> 
+  <thead>
+      <tr>
+        <!--Esta es nuestra cabezera de tabla-->
+          <th>Empleado ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Telefono</th>
+          <th>Salario</th>
+          <th>Acciones</th>
+      </tr>
+  </thead>
+  <tbody>
+    <!--cuerpo de la tabla con la instruccion ngFor que manda a traer los datos almacenados -->
+    <tr>{{empleadoData.id}}</tr>  
+    <tr *ngFor="let row of empleadoData">
+          <td>{{row.id}}</td>
+          <td>{{row.firstName}}</td>
+          <td>{{row.lastName}}</td>
+          <td>{{row.email}}</td>
+          <td>{{row.mobile}}</td>
+          <td>{{row.salary}}</td>  
+          <td>
+              <button (click)="onEdit(row)" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"> Editar</button>
+              <button (click)="deleteEmpleado(row)" class="btn btn-danger mx-3"> Eliminar</button>
+          </td>
+      </tr>
+   </tbody>
+   </table>
+  </div>
+  
+                                        <!-- MODAL-->
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"> Detalles Empleado</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+              </div>
+              <div class="modal-body">
+                  <form [formGroup]="formModel" class="needs-validation" novalidate>
+                      <div class="mb-3">
+                        <mat-form-field appearance="fill">
+                          <label for="exampleInput" class="form-label">Nombre</label>
+                          <input type="text"  formControlName="firstName"  class="form-control" id="Nombre">
+                          <mat-error *ngIf="formModel.get('firstName')?.invalid">Campo Obligatorio</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="mb-3">
+                        <mat-form-field appearance="fill">
+                          <label for="exampleInput" class="form-label">Apellidos</label>
+                          <input type="text" formControlName="lastName" class="form-control"  id="exampleInput" required>
+                          <mat-error *ngIf="formModel.get('lastName')?.invalid">Campo Obligatorio</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="mb-3">
+                        <mat-form-field appearance="fill">
+                          <label for="exampleInput" class="form-label">Correo</label>
+                          <input type="email" formControlName="email"  class="form-control" id="exampleInput" required>
+                          <mat-error *ngIf="formModel.get('email')?.invalid">Campo Invalido</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="mb-3">
+                        <mat-form-field appearance="fill">
+                          <label for="exampleInput" class="form-label">Telefono</label>
+                          <input type="number" formControlName="mobile" class="form-control" id="exampleInput" required>
+                          <mat-error *ngIf="formModel.get('mobile')?.invalid">Campo Obligatorio</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="mb-3">
+                        <mat-form-field appearance="fill">
+                          <label for="exampleInput" class="form-label">Salario</label>
+                          <input type="number" formControlName="salary" class="form-control" id="exampleInput">
+                          <mat-error *ngIf="formModel.get('salary')?.invalid">Campo Obligatorio</mat-error>
+                        </mat-form-field>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal"> Cerrar</button>
+                  <button type="button" (click)="postEmpleadoDetails()" class="btn btn-primary" > Guardar</button>
+                  <button type="button" (click)="updateEmpleadoDetails()" class="btn btn-info">Actualizar</button>
+              </div>
+          </div>
+      </div>
+  </div>
